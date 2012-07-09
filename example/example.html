@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>jQuery.slideMatrix Example</title>
+    
+    <!-- HTML5 Shim -->
+    <!--[if lt IE 9]>
+      <script src='http://html5shim.googlecode.com/svn/trunk/html5.js' type='text/javascript'></script>
+    <![endif]-->
+    
+    <!-- CSS Reset (The one Twitter Bootstrap uses) -->
+    <link href='https://raw.github.com/necolas/normalize.css/master/normalize.css' media='all' rel='stylesheet' type='text/css' />
+    
+    <link href='../lib/jquery.slideMatrix.css' media='all' rel='stylesheet' type='text/css' />
+    <link href='./style.css' media='all' rel='stylesheet' type='text/css' />
+  </head>
+  <body>
+    
+    <!-- The Matrix -->
+    <!-- Note: The matrix items can be in any order. -->
+    <div id='myMatrix' class='slideMatrix'>
+      
+      <div class='slideMatrixContainer'>
+        
+        <div class='slideMatrixItem' id='leftContent2' data-left-selector='#rightContent2' data-right-selector='#leftContent1' data-index='0'>
+          <h1>Left Content 2</h1>
+          <p>This is the second left content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='leftContent1Up' data-down-selector='#leftContent1' data-index='1'>
+          <h1>Left Content 1 - Up</h1>
+          <p>I'm above the first left content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='leftContent1' data-left-selector='#leftContent2' data-right-selector='#mainContent' data-up-selector='#leftContent1Up' data-down-selector='#leftContent1Down' data-index='1'>
+          <h1>Left Content 1</h1>
+          <p>This is the first left content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='leftContent1Down' data-up-selector='#leftContent1' data-index='1'>
+          <h1>Left Content 1 - Down</h1>
+          <p>I'm under the first left content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='mainContent' data-left-selector='#leftContent1' data-right-selector='#rightContent1' data-index='2'>
+          <h1>Main Content</h1>
+          <p>This is the main content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='rightContent1' data-left-selector='#mainContent' data-right-selector='#rightContent2' data-index='3'>
+          <h1>Right Content 1</h1>
+          <p>This is the first right content.</p>
+        </div>
+        
+        <div class='slideMatrixItem' id='rightContent2' data-left-selector='#rightContent1' data-right-selector='#leftContent2' data-index='4'>
+          <h1>Right Content 2</h1>
+          <p>This is the second right content.</p>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+    <table>
+      <tr>
+        <td></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideUp'>Up</a>
+        </td>
+        <td></td>
+        <td style='width: 50px'></td>
+        <td></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#leftContent1Up'>leftContent1Up</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideLeft'>Left</a>
+        </td>
+        <td></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideRight'>Right</a>
+        </td>
+        <td style='width: 50px'></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#leftContent2'>leftContent2</a>
+        </td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#leftContent1'>leftContent1</a>
+        </td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#mainContent'>mainContent</a>
+        </td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#rightContent1'>rightContent1</a>
+        </td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#rightContent2'>rightContent2</a>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideDown'>Down</a>
+        </td>
+        <td></td>
+        <td style='width: 50px'></td>
+        <td></td>
+        <td>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#leftContent1Down'>leftContent1Down</a>
+        </td>
+      </tr>
+    </table>
+    
+    
+    
+    
+    <!-- Load scripts at the end (because we've all been conditioned since birth to do so, right?) -->
+    <script src='http://code.jquery.com/jquery-latest.js'></script>
+    <script src='../lib/jquery.slideMatrix.js' type='text/javascript'></script>
+    <script src='./script.js' type='text/javascript'></script>
+    
+  </body>
+</html>
