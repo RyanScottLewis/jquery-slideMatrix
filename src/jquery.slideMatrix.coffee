@@ -1,3 +1,8 @@
+###
+jquery.slideMatrix v0.0.2
+(c) 2012 Ryan Lewis <ryanscottlewis@gmail.com> MIT License
+###
+
 (($, window) ->
   $.fn.extend
     slideMatrix: ->
@@ -16,6 +21,10 @@
           else if typeof argument == 'object'
             nextPos.x = argument.x || 0
             nextPos.y = argument.y || 0
+          else if argument instanceof jQuery
+            nextElmData = argument.data()
+            nextPos.x = nextElmData.x || 0
+            nextPos.y = nextElmData.y || 0
           
           nextItem = @find( ".slideMatrixItem[data-x='" + nextPos.x + "'][data-y='" + nextPos.y + "']" )
           
