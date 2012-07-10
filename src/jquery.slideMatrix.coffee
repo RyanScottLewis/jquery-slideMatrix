@@ -1,97 +1,130 @@
 (($, window) ->
   $.fn.extend
-    slideMatrix: () ->
+    slideMatrix: ->
       optionsOrArgument = arguments[0]
       
       switch optionsOrArgument
         when 'slideTo'
-          if @currentItem.data('index')? # Which is always should
-            nextItemSelector = arguments[1]
-            
-            if nextItemSelector?
-              nextItem = $( nextItemSelector )
-              
-              unless @currentItem[0] == nextItem[0]
-                if nextItem.data('index') > @currentItem.data('index') # Slide right
-                  startPos = @currentItem.width()
-                else # Slide left
-                  startPos = -@currentItem.width()
-                
-                nextItem.css( left: startPos )
-                nextItem.show()
-                
-                @currentItem.animate left: -startPos, 250
-                nextItem.animate left: 0, 250, =>
-                  @currentItem.hide()
-                  @currentItem = nextItem
+          argument = arguments[1]
+          currentItemPos = @currentItemPos()
+          nextPos = {}
+          
+          if typeof argument == 'string'
+            nextElmData = @find( argument ).data()
+            nextPos.x = nextElmData.x || 0
+            nextPos.y = nextElmData.y || 0
+          else if typeof argument == 'object'
+            nextPos.x = argument.x || 0
+            nextPos.y = argument.y || 0
+          
+          nextItem = @find( ".slideMatrixItem[data-x='" + nextPos.x + "'][data-y='" + nextPos.y + "']" )
+          
+          if nextItem?
+            if nextPos.x > currentItemPos.x
+              if nextItem.length == 0 && @settings.wraparound
+                console.log 'Should wrap!'
+              else
+                @slideToItem( nextItem, 'right' )
+            else if nextPos.x < currentItemPos.x
+              if nextPos.x < 0 && @settings.wraparound
+                console.log 'Should wrap!'
+              else if nextPos.x >= 0
+                @slideToItem( nextItem, 'left' )
+            else if nextPos.x == currentItemPos.x
+              if nextPos.y > currentItemPos.y
+                if nextItem.length == 0 && @settings.wraparound
+                  console.log 'Should wrap!'
+                else
+                  @slideToItem( nextItem, 'up' )
+              else if nextPos.y < currentItemPos.y
+                if nextPos < 0 && @settings.wraparound
+                  console.log 'Should wrap!'
+                else
+                  @slideToItem( nextItem, 'down' )
         
-        when 'slideUp'
-          if @currentItem.data('up-selector')
-            nextItem = $( @currentItem.data('up-selector') )
-            
-            nextItem.css( top: -@currentItem.height() )
-            nextItem.show()
-            
-            @currentItem.animate top: @currentItem.height(), 250
-            nextItem.animate top: 0, 250, =>
-              @currentItem.hide()
-              @currentItem = nextItem
-        
-        when 'slideRight'
-          if @currentItem.data('right-selector')
-            nextItem = $( @currentItem.data('right-selector') )
-            
-            nextItem.css( left: @currentItem.width() )
-            nextItem.show()
-            
-            @currentItem.animate left: -@currentItem.width(), 250
-            nextItem.animate left: 0, 250, =>
-              @currentItem.hide()
-              @currentItem = nextItem
-        
-        when 'slideDown'
-          if @currentItem.data('down-selector')
-            nextItem = $( @currentItem.data('down-selector') )
-            
-            nextItem.css( top: @currentItem.height() )
-            nextItem.show()
-            
-            @currentItem.animate top: -@currentItem.height(), 250
-            nextItem.animate top: 0, 250, =>
-              @currentItem.hide()
-              @currentItem = nextItem
-        
-        when 'slideLeft'
-          if @currentItem.data('left-selector')
-            nextItem = $( @currentItem.data('left-selector') )
-            
-            nextItem.css( left: -@currentItem.width() )
-            nextItem.show()
-            
-            @currentItem.animate left: @currentItem.width(), 250
-            nextItem.animate left: 0, 250, =>
-              @currentItem.hide()
-              @currentItem = nextItem
+        when 'slide'
+          direction = arguments[1]
+          currentItemPos = @currentItemPos()
+          
+          nextItemPos = switch direction
+            when 'up'
+              { x: currentItemPos.x, y: currentItemPos.y+1 }
+            when 'right'
+              { x: currentItemPos.x+1, y: currentItemPos.y }
+            when 'down'
+              { x: currentItemPos.x, y: currentItemPos.y-1 }
+            when 'left'
+              { x: currentItemPos.x-1, y: currentItemPos.y }
+          
+          nextItem = @find( ".slideMatrixItem[data-x='" + nextItemPos.x + "'][data-y='" + nextItemPos.y + "']" )
+          if nextItem.length == 0 && @settings.wraparound
+            console.log 'Should wrap!'
+          else if nextItem.length > 0
+            @slideToItem( nextItem, direction )
         
         else
           @defaultOptions =
             initialItemFilter: ':first'
+            wraparound: false
+            slideSpeed: 250
           
-          settings = $.extend( {}, @defaultOptions, optionsOrArgument )
+          @settings = $.extend( {}, @defaultOptions, optionsOrArgument )
           
-          items = @find('.slideMatrixItem')
-          initialItem = items.filter( settings.initialItemFilter )
+          @currentItemPos = ->
+            x: @currentItem.data('x') || 0
+            y: @currentItem.data('y') || 0
+          
+          @sliding = false
+          
+          @slideToItem = (item, direction) ->
+            cssAttr = if direction == 'up' || direction == 'down' then 'top' else 'left'
+            
+            nextItemCssStartValue = switch direction
+              when 'up'    then -@currentItem.height()
+              when 'right' then @currentItem.width()
+              when 'down'  then @currentItem.height()
+              when 'left'  then -@currentItem.width()
+            
+            nextItemCssStart = (->o={}; o[ cssAttr ] = nextItemCssStartValue; o)()
+            nextItemCssEnd = (->o={}; o[ cssAttr ] = 0; o)()
+            currentItemCssEnd = (->o={}; o[ cssAttr ] = -nextItemCssStartValue; o)()
+            
+            item.css( nextItemCssStart )
+            item.show()
+            
+            unless @sliding == true
+              @sliding = true
+              @currentItem.animate currentItemCssEnd, @settings.slideSpeed
+              item.animate nextItemCssEnd, @settings.slideSpeed, =>
+                @currentItem.hide().css( left: 0, top: 0 )
+                @currentItem = item
+                @sliding = false
+          
           controls = $( "[data-target='" + @selector + "']" )
-          
           controls.click (e) =>
             e.preventDefault()
             
-            $control = $( e.target )
-            $target = $( $control.data('target') )
-            
-            @slideMatrix( $control.data('action'), $control.data('selector') )
-            
-            false
+            unless @sliding == true
+              $control = $( e.target )
+              $target = $( $control.data('target') )
+              action = $control.data('action')
+              
+              switch action
+                when 'slideTo'
+                  if $control.data('selector')?
+                    @slideMatrix( action, $control.data('selector') )
+                  else
+                    @slideMatrix( action, { x: $control.data('x'), y: $control.data('y') } )
+                when 'slide'
+                  @slideMatrix( action, $control.data('direction') || 'right' )
+                else
+                  return false
+              
+              false
+          
+          items = @find('.slideMatrixItem')
+          initialItem = items.filter( @settings.initialItemFilter )
+          
           
           items.hide()
           initialItem.show()

@@ -1,7 +1,8 @@
 $(function(){
   
   $('#myMatrix').slideMatrix({
-    initialItemFilter: '#mainContent' // Default: ':first' - See: http://api.jquery.com/filter/
+    initialItemFilter: '#mainContent',  // Default: ':first' - See: http://api.jquery.com/filter/
+    slideSpeed: 250
   });
   
 });

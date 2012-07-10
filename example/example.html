@@ -23,37 +23,37 @@
       
       <div class='slideMatrixContainer'>
         
-        <div class='slideMatrixItem' id='leftContent2' data-left-selector='#rightContent2' data-right-selector='#leftContent1' data-index='0'>
+        <div class='slideMatrixItem' id='leftContent2' data-x='0' data-y='1'>
           <h1>Left Content 2</h1>
           <p>This is the second left content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='leftContent1Up' data-down-selector='#leftContent1' data-index='1'>
+        <div class='slideMatrixItem' id='leftContent1Up' data-x='1' data-y='2'>
           <h1>Left Content 1 - Up</h1>
           <p>I'm above the first left content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='leftContent1' data-left-selector='#leftContent2' data-right-selector='#mainContent' data-up-selector='#leftContent1Up' data-down-selector='#leftContent1Down' data-index='1'>
+        <div class='slideMatrixItem' id='leftContent1' data-x='1' data-y='1'>
           <h1>Left Content 1</h1>
           <p>This is the first left content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='leftContent1Down' data-up-selector='#leftContent1' data-index='1'>
+        <div class='slideMatrixItem' id='leftContent1Down' data-x='1' data-y='0'>
           <h1>Left Content 1 - Down</h1>
           <p>I'm under the first left content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='mainContent' data-left-selector='#leftContent1' data-right-selector='#rightContent1' data-index='2'>
+        <div class='slideMatrixItem' id='mainContent' data-x='2' data-y='1'>
           <h1>Main Content</h1>
           <p>This is the main content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='rightContent1' data-left-selector='#mainContent' data-right-selector='#rightContent2' data-index='3'>
+        <div class='slideMatrixItem' id='rightContent1' data-x='3' data-y='1'>
           <h1>Right Content 1</h1>
           <p>This is the first right content.</p>
         </div>
         
-        <div class='slideMatrixItem' id='rightContent2' data-left-selector='#rightContent1' data-right-selector='#leftContent2' data-index='4'>
+        <div class='slideMatrixItem' id='rightContent2' data-x='4' data-y='1'>
           <h1>Right Content 2</h1>
           <p>This is the second right content.</p>
         </div>
@@ -66,7 +66,7 @@
       <tr>
         <td></td>
         <td>
-          <a href='#' data-target='#myMatrix' data-action='slideUp'>Up</a>
+          <a href='#' data-target='#myMatrix' data-action='slide' data-direction='up'>Up</a>
         </td>
         <td></td>
         <td style='width: 50px'></td>
@@ -77,11 +77,11 @@
       </tr>
       <tr>
         <td>
-          <a href='#' data-target='#myMatrix' data-action='slideLeft'>Left</a>
+          <a href='#' data-target='#myMatrix' data-action='slide' data-direction='left'>Left</a>
         </td>
         <td></td>
         <td>
-          <a href='#' data-target='#myMatrix' data-action='slideRight'>Right</a>
+          <a href='#' data-target='#myMatrix' data-action='slide' data-direction='right'>Right</a>
         </td>
         <td style='width: 50px'></td>
         <td>
@@ -91,7 +91,7 @@
           <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#leftContent1'>leftContent1</a>
         </td>
         <td>
-          <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#mainContent'>mainContent</a>
+          <a href='#' data-target='#myMatrix' data-action='slideTo' data-x='2' data-y='1'>mainContent</a>
         </td>
         <td>
           <a href='#' data-target='#myMatrix' data-action='slideTo' data-selector='#rightContent1'>rightContent1</a>
@@ -103,7 +103,7 @@
       <tr>
         <td></td>
         <td>
-          <a href='#' data-target='#myMatrix' data-action='slideDown'>Down</a>
+          <a href='#' data-target='#myMatrix' data-action='slide' data-direction='down'>Down</a>
         </td>
         <td></td>
         <td style='width: 50px'></td>
