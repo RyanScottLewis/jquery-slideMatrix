@@ -1,7 +1,8 @@
-.slideMatrixItem {
-  display: none;
-  background-color: #eee;
-}
-
-/* Example styles... has nothing to do with the plugin */
+body, html { margin: 0; }
+table { margin: 0 auto; }
 td { text-align: center; }
+
+.slideMatrixItem {
+  background-color: #eee;
+  padding: 20px;
+}

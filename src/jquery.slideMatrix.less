@@ -1,0 +1,25 @@
+@defaultHeight: 300px;
+
+body .slideMatrix {
+  width: 100%;
+  height: @defaultHeight;
+  position: relative;
+  display: block;
+  
+  & > .slideMatrixContainer {
+    width: 100%;
+    height: @defaultHeight;
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    
+    & > .slideMatrixItem {
+      width: 100%;
+      height: @defaultHeight;
+      position: absolute;
+      display: none;
+      top: 0;
+      left: 0;
+    }
+  }
+}

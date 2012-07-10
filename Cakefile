@@ -3,6 +3,9 @@ fs     = require 'fs'
 {print} = require 'util'
 {spawn} = require 'child_process'
 
+task 'styles', 'Build styles', ->
+  exec 'lessc src/jquery.slideMatrix.less > lib/jquery.slideMatrix.css'
+
 task 'build', 'Build lib/ from src/', ->
   coffee = spawn 'coffee', ['-c', '-l', '-o', 'lib', 'src']
   coffee.stderr.on 'data', (data) ->
