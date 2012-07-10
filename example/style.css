@@ -1,4 +1,7 @@
-.slideMatrixItem { background-color: #eee; }
+.slideMatrixItem {
+  display: none;
+  background-color: #eee;
+}
 
 /* Example styles... has nothing to do with the plugin */
 td { text-align: center; }
