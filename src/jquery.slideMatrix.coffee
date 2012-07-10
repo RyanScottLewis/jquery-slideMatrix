@@ -1,5 +1,5 @@
 ###
-jquery.slideMatrix v0.0.2
+jquery.slideMatrix v0.0.3
 (c) 2012 Ryan Lewis <ryanscottlewis@gmail.com> MIT License
 ###
 
